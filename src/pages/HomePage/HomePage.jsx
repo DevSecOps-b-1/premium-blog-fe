@@ -1,26 +1,20 @@
+import { collection, getDocs } from "firebase/firestore"
+import { useEffect, useState } from "react"
+import { db } from "../../firebase/config"
 import { BlogPreviewCard } from "../../components/BlogPreviewCard"
 
 export const HomePage = () => {
-    const blogPosts = [
-        {
-            title: 'lorem ipsum dolor sit amet, consectetur adipiscing',
-            content: 'lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonumy eirmod tempor incididunt ut labore et dolore mag at vero eos et dolore mag et dolore mag et',
-            author: 'Arif Rama',
-            id: 1
-        },
-        {
-            title: 'lorem ipsum dolor sit amet, consectetur adipiscing',
-            content: 'lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonumy eirmod tempor incididunt ut labore et dolore mag at vero eos et dolore mag et dolore mag et',
-            author: 'Putra',
-            id: 2
-        },
-        {
-            title: 'lorem ipsum dolor sit amet, consectetur adipiscing',
-            content: 'lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonumy eirmod tempor incididunt ut labore et dolore mag at vero eos et dolore mag et dolore mag et',
-            author: 'Itachi',
-            id: 3
-        },
-    ]
+    const [blogPosts, setBlogPosts] = useState([])
+
+    useEffect(() => {
+        async function fetchPosts() {
+            const collRef = collection(db, 'blog-posts')
+            const data = await getDocs(collRef)
+            setBlogPosts(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+            console.log('---')
+        }
+        fetchPosts()
+    }, [])
 
     return (
         <main className="py-10">
