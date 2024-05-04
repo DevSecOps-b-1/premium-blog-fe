@@ -68,3 +68,24 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+system:
+this website is for anyone who wants to make blogs. anyone can create a blog in this website and upload it easily. 
+
+requirements:
+1. user can create an account for anyone who wants to be an author.
+2. this system can show all blogs from all authors
+3. author can create a blog
+4. author can logout
+5. user can filter blogs by category
+
+page:
+1. homepage
+2. create a blog page
+3. authors blog page
+4. blog page
+
+components:
+1. header
+2. footer
+3. blog card preview
