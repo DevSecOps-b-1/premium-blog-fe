@@ -1,6 +1,6 @@
 import { collection, getDocs } from "firebase/firestore"
 import { useEffect, useState } from "react"
-import { db } from "../../firebase/config"
+import { auth, db } from "../../firebase/config"
 import { BlogPreviewCard } from "../../components/BlogPreviewCard"
 
 export const HomePage = () => {
@@ -15,6 +15,8 @@ export const HomePage = () => {
         }
         fetchPosts()
     }, [])
+
+    console.log(auth.currentUser)
 
     return (
         <main className="py-10">
