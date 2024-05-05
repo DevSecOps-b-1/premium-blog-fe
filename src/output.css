@@ -674,6 +674,10 @@ video {
   max-width: 1280px;
 }
 
+.max-w-screen-md {
+  max-width: 768px;
+}
+
 .flex-col {
   flex-direction: column;
 }
