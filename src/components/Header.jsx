@@ -1,10 +1,10 @@
 import { signInWithPopup, signOut } from "firebase/auth"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { NavLink, Link } from "react-router-dom"
 import { auth, provider } from "../firebase/config"
 
 export const Header = () => {
-    const [isAuth, setIsAuth] = useState(false) // is user logged in?
+    const [isAuth, setIsAuth] = useState(auth.currentUser || false) // is user logged in?
     const [showNav, setShowNav] = useState(false) // to show navigation on mobile screen
 
     async function handleLogin() {

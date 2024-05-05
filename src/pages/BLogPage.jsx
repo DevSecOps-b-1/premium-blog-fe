@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams, Link } from "react-router-dom"
 import { doc, getDoc } from "firebase/firestore"
-import { db } from "../firebase/config"
+import { db, auth } from "../firebase/config"
 
 export const BlogPage = () => {
     const { id } = useParams() // get post id from  url
@@ -29,7 +29,7 @@ export const BlogPage = () => {
                     <header className="mb-4 lg:mb-6 not-format">
                         <address className="flex items-center mb-6 not-italic">
                             <div className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
-                                <img className="mr-4 w-16 h-16 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Jese Leos" />
+                                <img className="mr-4 w-16 h-16 rounded-full" src={post && post.author.photo} alt="Jese Leos" />
                                 <div>
                                     <Link to={`author/arif`} rel="author" className="text-xl font-bold text-gray-900 dark:text-white">{post && post.author.name}</Link>
                                     <p className="text-base text-gray-500 dark:text-gray-400"><time dateTime="2022-02-08" title="February 8th, 2022">{date}</time></p>

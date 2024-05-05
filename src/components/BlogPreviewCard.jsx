@@ -28,6 +28,5 @@ export const BlogPreviewCard = ({ post }) => {
                 </span>
             </div>
         </div>
-
     )
 }

@@ -14,7 +14,8 @@ export const CreateBlogPage = () => {
             content: e.target.contentInput.value,
             author: {
                 name: auth.currentUser.displayName,
-                id: auth.currentUser.uid
+                id: auth.currentUser.uid,
+                photo: auth.currentUser.photoURL
             },
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp()
