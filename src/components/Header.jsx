@@ -10,7 +10,6 @@ export const Header = () => {
     async function handleLogin() {
         signInWithPopup(auth, provider).then((data) => {
             setIsAuth(true);
-            console.log(data);
         }).catch((error) => {
             console.error(error);
         })
