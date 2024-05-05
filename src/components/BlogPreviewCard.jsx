@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 export const BlogPreviewCard = ({ post }) => {
     let { content } = post
 
+    console.log(post.content)
+
     let contentPreview = content.split(" ");
     if (contentPreview.length > 35) contentPreview = contentPreview.slice(0, 35).join(" ");
 
