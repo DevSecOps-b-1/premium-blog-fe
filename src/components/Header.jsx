@@ -11,6 +11,7 @@ export const Header = () => {
     async function handleLogin() {
         signInWithPopup(auth, provider).then((data) => {
             setIsAuth(true);
+            navigate('/');
         }).catch((error) => {
             console.error(error);
         })
