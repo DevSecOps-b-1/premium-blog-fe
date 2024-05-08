@@ -1,19 +1,25 @@
 import { useEffect, useState } from "react"
 import { useParams, Link } from "react-router-dom"
-import { doc, getDoc } from "firebase/firestore"
+import { doc, getDoc, serverTimestamp, updateDoc } from "firebase/firestore"
 import { auth, db } from "../firebase/config"
 
 export const BlogPage = () => {
     const { id } = useParams() // get post id from  url
     const [post, setPost] = useState()
     const [date, setDate] = useState('')
-    const [showModal, setShowModal] = useState(false)
+
+    const [showModal, setShowModal] = useState(false);
+    const [editTitle, setEditTitle] = useState('');
+    const [editContent, setEditContent] = useState('');
+    const [renderToggle, setRenderToggle] = useState(false);
 
     useEffect(() => {
         async function getPost() {
             const docRef = doc(db, 'blog-posts', id)
             getDoc(docRef).then((document) => {
                 setPost(document.data())
+                setEditTitle(document.data().title)
+                setEditContent(document.data().content)
 
                 let dateBuffer = document.data().createdAt.toDate().toString()
                 dateBuffer = dateBuffer.split(' ').splice(1, 3).join(' ');
@@ -21,7 +27,23 @@ export const BlogPage = () => {
             })
         }
         getPost()
-    }, [id])
+    }, [id, renderToggle])
+
+    function handleEdit(e) {
+        e.preventDefault();
+
+        const editedPost = {
+            title: e.target.titleEdit.value,
+            content: e.target.contentEdit.value,
+            updatedAt: serverTimestamp()
+        }
+
+        const docRef = doc(db, 'blog-posts', id)
+        updateDoc(docRef, editedPost).then(() => {
+            setRenderToggle(!renderToggle);
+            setShowModal(false);
+        })
+    }
 
     return (
         <main className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
@@ -36,9 +58,9 @@ export const BlogPage = () => {
                                 <span className="sr-only">Close modal</span>
                             </button>
                             <h1 className="text-center text-3xl font-semibold mb-7">Edit Blog Post</h1>
-                            <form className="flex flex-col p-10">
-                                <input type="text" id="titleInput" name="titleInput" placeholder="title here..." className="mb-5 text-3xl p-3 outline-none" />
-                                <textarea id="contentInput" name="contentInput" placeholder="content here..." className="p-3 mb-5 outline-none min-h-96" />
+                            <form onSubmit={handleEdit} className="flex flex-col p-10">
+                                <input onChange={(e) => setEditTitle(e.target.value)} value={editTitle} type="text" id="titleEdit" name="titleEdit" placeholder="title here..." className="mb-5 text-3xl p-3 outline-none" />
+                                <textarea onChange={(e) => setEditContent(e.target.value)} value={editContent} id="contentEdit" name="contentEdit" placeholder="content here..." className="p-3 mb-5 outline-none min-h-96" />
                                 <button type="submit" className="w-fit self-end text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Submit</button>
                             </form>
                         </div>
