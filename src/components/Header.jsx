@@ -4,7 +4,7 @@ import { NavLink, Link, useNavigate } from "react-router-dom"
 import { auth, provider } from "../firebase/config"
 
 export const Header = () => {
-    const [isAuth, setIsAuth] = useState(auth.currentUser || false) // is user logged in?
+    const [isAuth, setIsAuth] = useState(JSON.parse(localStorage.getItem('BlogmateAuth'))) // is user logged in?
     const [showNav, setShowNav] = useState(false) // to show navigation on mobile screen
     const navigate = useNavigate();
 
@@ -16,6 +16,7 @@ export const Header = () => {
     async function handleLogin() {
         signInWithPopup(auth, provider).then(() => {
             setIsAuth(true);
+            localStorage.setItem('BlogmateAuth', JSON.stringify(true));
             navigate('/');
         }).catch((error) => {
             console.error(error);
@@ -25,6 +26,7 @@ export const Header = () => {
     function handleLogout() {
         signOut(auth);
         setIsAuth(false);
+        localStorage.setItem('BlogmateAuth', JSON.stringify(false));
         navigate('/');
     }
 
@@ -33,8 +35,8 @@ export const Header = () => {
             <nav className="bg-white border-gray-200 dark:bg-gray-900">
                 <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                     <Link to='/' className="flex items-center space-x-3 rtl:space-x-reverse">
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7h1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h11.5M7 14h6m-6 3h6m0-10h.5m-.5 3h.5M7 7h3v3H7V7Z" />
+                        <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7h1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h11.5M7 14h6m-6 3h6m0-10h.5m-.5 3h.5M7 7h3v3H7V7Z" />
                         </svg>
                         <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Blogmate</span>
                     </Link>
@@ -56,7 +58,7 @@ export const Header = () => {
                             )}
                             {isAuth && (
                                 <li className="h-fit">
-                                    <NavLink to={`author/${auth.currentUser.uid}`} className={({ isActive }) => isActive ? classActive : classInactive}>My Blog</NavLink>
+                                    <NavLink to={auth.currentUser && `author/${auth.currentUser.uid}`} className={({ isActive }) => isActive ? classActive : classInactive}>My Blog</NavLink>
                                 </li>
                             )}
                             {isAuth ? (
