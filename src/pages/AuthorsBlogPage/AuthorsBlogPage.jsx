@@ -1,22 +1,33 @@
-import { collection, getDocs } from "firebase/firestore"
+import { collection, getDocs, query, where } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { BlogPreviewCard } from "../../components/BlogPreviewCard"
 import { db, auth } from "../../firebase/config"
+import { useParams } from "react-router-dom"
 
 export const AuthorsBlogPage = () => {
+    const { id } = useParams() // get post id from  url
     const [blogPosts, setBlogPosts] = useState([])
 
+    console.log(id)
     console.log(auth)
 
     useEffect(() => {
         async function fetchPosts() {
             let collRef = collection(db, 'blog-posts')
+            if (id) {
+                const authorQuery = {
+                    id: id,
+                    name: auth.currentUser.displayName,
+                    photo: auth.currentUser.photoURL
+                }
+                collRef = query(collRef, where('author', "==", authorQuery))
+            }
             const data = await getDocs(collRef)
             setBlogPosts(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
             console.log('---')
         }
         fetchPosts()
-    }, [])
+    }, [id])
 
     return (
         <main className="py-10">
