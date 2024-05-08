@@ -4,7 +4,7 @@ import { auth, db } from "../firebase/config";
 
 export const BlogPreviewCard = ({ post, authors, toggle, setToggle }) => {
     let { content } = post;
-    const isAuthors = auth.currentUser.uid === authors ? true : false;
+    const isAuthors = auth.currentUser && auth.currentUser.uid === authors ? true : false;
 
     let postDate = post.createdAt.toDate().toString();
     postDate = postDate.split(' ').splice(1, 3).join(' ');
