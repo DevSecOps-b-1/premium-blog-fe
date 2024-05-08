@@ -1,9 +1,12 @@
 import { useRef } from "react"
 import { auth, db } from "../../firebase/config";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 export const CreateBlogPage = () => {
     const formRef = useRef(null)
+
+    const navigate = useNavigate()
 
     async function handleSubmitPost(e) {
         e.preventDefault();
@@ -20,8 +23,10 @@ export const CreateBlogPage = () => {
             updatedAt: serverTimestamp()
         }
         const collRef = collection(db, 'blog-posts');
-        addDoc(collRef, postData)
-        formRef.current.reset();
+        addDoc(collRef, postData).then(() => {
+            navigate(`/author/${auth.currentUser.uid}`)
+        });
+
     }
 
     return (

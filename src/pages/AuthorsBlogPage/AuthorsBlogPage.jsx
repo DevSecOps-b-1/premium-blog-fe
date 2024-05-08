@@ -32,7 +32,7 @@ export const AuthorsBlogPage = () => {
             <div className="max-w-screen-xl m-auto">
                 <section className="h-fit p-5 rounded-lg shadow fixed justify-self-end">
                     <div>
-                        <img className="mr-4 w-16 h-16 rounded-full" src={auth.currentUser.photoURL} alt="Jese Leos" />
+                        <img className="mr-4 w-16 h-16 rounded-full border" src={auth.currentUser.photoURL} alt="Profile" />
                         <div className="p-3">
                             Name:
                             <p rel="author" className="text-lg mb-3 ms-2 font-semibold text-gray-900 dark:text-white">{auth.currentUser.displayName}</p>
