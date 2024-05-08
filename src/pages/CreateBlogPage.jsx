@@ -1,4 +1,3 @@
-import { useRef } from "react"
 import { auth, db } from "../firebase/config";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
