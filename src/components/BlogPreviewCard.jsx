@@ -1,6 +1,8 @@
+import { deleteDoc, doc } from "firebase/firestore";
 import { Link } from "react-router-dom";
+import { db } from "../firebase/config";
 
-export const BlogPreviewCard = ({ post, authors }) => {
+export const BlogPreviewCard = ({ post, authors, toggle, setToggle }) => {
     let { content } = post
 
     let postDate = post.createdAt.toDate().toString()
@@ -8,6 +10,18 @@ export const BlogPreviewCard = ({ post, authors }) => {
 
     let contentPreview = content.split(" ");
     if (contentPreview.length > 35) contentPreview = contentPreview.slice(0, 35).join(" ");
+
+    async function handleDelete() {
+        const docRef = doc(db, 'blog-posts', post.id);
+        deleteDoc(docRef).then(() => {
+            console.log('delete post');
+        })
+        setToggle(!toggle)
+    }
+
+    function handleEdit() {
+        console.log('edit post')
+    }
 
     return (
         <div className="w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -22,10 +36,10 @@ export const BlogPreviewCard = ({ post, authors }) => {
                 </Link>
                 {authors && (
                     <div className="flex gap-3">
-                        <button className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                        <button onClick={handleDelete} className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
                             Delete
                         </button>
-                        <button className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-gray-700 rounded-lg hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                        <button onClick={handleEdit} className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-gray-700 rounded-lg hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
                             Edit
                         </button>
                     </div>

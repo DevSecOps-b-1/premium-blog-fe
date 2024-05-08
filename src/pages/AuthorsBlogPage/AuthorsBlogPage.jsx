@@ -6,10 +6,8 @@ import { useParams } from "react-router-dom"
 
 export const AuthorsBlogPage = () => {
     const { id } = useParams() // get post id from  url
-    const [blogPosts, setBlogPosts] = useState([])
-
-    console.log(id)
-    console.log(auth)
+    const [blogPosts, setBlogPosts] = useState([]);
+    const [toggle, setToggle] = useState(false);
 
     useEffect(() => {
         async function fetchPosts() {
@@ -27,7 +25,7 @@ export const AuthorsBlogPage = () => {
             console.log('---')
         }
         fetchPosts()
-    }, [id])
+    }, [id, toggle])
 
     return (
         <main className="py-10">
@@ -42,11 +40,11 @@ export const AuthorsBlogPage = () => {
                             <p className="text-lg mb-3 ms-2 font-semibold text-gray-900 dark:text-white">{auth.currentUser.email}</p>
                         </div>
                     </div>
-                    <div className="p-3 text-lg font-semibold text-gray-900 dark:text-white border rounded-md shadow">Total post: 2</div>
+                    <div className="p-3 text-lg font-semibold text-gray-900 dark:text-white border rounded-md shadow">Total post: {blogPosts.length}</div>
                 </section>
                 <ul className="ms-72 flex flex-col gap-5">
                     {blogPosts && blogPosts.map(post => (
-                        <BlogPreviewCard key={post.id} post={post} authors={true} />
+                        <BlogPreviewCard key={post.id} post={post} authors={true} toggle={toggle} setToggle={setToggle} />
                     ))}
                 </ul>
             </div>

@@ -3,7 +3,6 @@ import { auth, db } from "../../firebase/config";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 export const CreateBlogPage = () => {
-
     const formRef = useRef(null)
 
     async function handleSubmitPost(e) {
@@ -20,9 +19,6 @@ export const CreateBlogPage = () => {
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp()
         }
-
-        console.log(postData);
-
         const collRef = collection(db, 'blog-posts');
         addDoc(collRef, postData)
         formRef.current.reset();
