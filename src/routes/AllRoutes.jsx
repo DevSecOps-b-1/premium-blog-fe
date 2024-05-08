@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom"
 import { HomePage } from "../pages/HomePage"
 import { CreateBlogPage } from "../pages/CreateBlogPage"
-import { BlogPage } from "../pages/BlogPage"
+import { BlogPage } from "../pages/BlogPage/BlogPage"
 import { AuthorsBlogPage } from "../pages/AuthorsBlogPage/AuthorsBlogPage"
 import { ProtectedRoutes } from "./ProtectedRoutes"
 

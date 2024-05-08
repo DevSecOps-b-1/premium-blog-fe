@@ -4,9 +4,9 @@ import { NavLink, Link, useNavigate } from "react-router-dom"
 import { auth, provider } from "../firebase/config"
 
 export const Header = () => {
+    const navigate = useNavigate();
     const [isAuth, setIsAuth] = useState(JSON.parse(localStorage.getItem('BlogmateAuth'))) // is user logged in?
     const [showNav, setShowNav] = useState(false) // to show navigation on mobile screen
-    const navigate = useNavigate();
 
     // navlink active styles
     const classActive = 'block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500';

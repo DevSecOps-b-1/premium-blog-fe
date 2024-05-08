@@ -2,15 +2,15 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase/config";
 
-export const BlogPreviewCard = ({ post, authors, toggle, setToggle }) => {
-    let { content } = post;
-    const isAuthors = auth.currentUser && auth.currentUser.uid === authors ? true : false;
+export const BlogPreviewCard = ({ post, isAuthors, toggle, setToggle }) => {
     const navigate = useNavigate()
 
+    // create a date to show to the post preview
     let postDate = post.createdAt.toDate().toString();
     postDate = postDate.split(' ').splice(1, 3).join(' ');
 
-    let contentPreview = content.split(" ");
+    // create a post content preview
+    let contentPreview = post.content.split(" ");
     if (contentPreview.length > 35) contentPreview = contentPreview.slice(0, 35).join(" ");
 
     async function handleDelete() {
