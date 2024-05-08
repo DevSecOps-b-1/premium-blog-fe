@@ -8,6 +8,8 @@ export const BlogPage = () => {
     const [post, setPost] = useState()
     const [date, setDate] = useState('')
 
+    console.log(post)
+
     useEffect(() => {
         async function getPost() {
             const docRef = doc(db, 'blog-posts', id)
@@ -31,14 +33,14 @@ export const BlogPage = () => {
                             <div className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
                                 <img className="mr-4 w-16 h-16 rounded-full border" src={post && post.author.photo} alt="Profile" />
                                 <div>
-                                    <Link to={`author/arif`} rel="author" className="text-xl font-bold text-gray-900 dark:text-white">{post && post.author.name}</Link>
-                                    <p className="text-base text-gray-500 dark:text-gray-400"><time dateTime="2022-02-08" title="February 8th, 2022">{date}</time></p>
+                                    <Link to={post && `/author/${post.author.id}`} rel="author" className="text-xl font-bold text-gray-900 dark:text-white">{post && post.author.name}</Link>
+                                    <p className="text-base text-gray-500 dark:text-gray-400">{date}</p>
                                 </div>
                             </div>
                         </address>
                         <h1 className="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">{post && post.title}</h1>
                     </header>
-                    <section className="text-lg">
+                    <section className="text-lg whitespace-pre-wrap">
                         <p>{post && post.content}</p>
                     </section>
                 </article>
