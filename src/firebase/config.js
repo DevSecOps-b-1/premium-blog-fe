@@ -3,12 +3,12 @@ import { GoogleAuthProvider, getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCnSky5E777Rcmw0wm_xVL_eDcAJULL9Qc",
-    authDomain: "blogmate-62a2c.firebaseapp.com",
-    projectId: "blogmate-62a2c",
-    storageBucket: "blogmate-62a2c.appspot.com",
-    messagingSenderId: "837893970958",
-    appId: "1:837893970958:web:01539846c5d4090ec7305f"
+    apiKey: process.env.REACT_APP_APIKEY,
+    authDomain: process.env.REACT_APP_AUTHDOMAIN,
+    projectId: process.env.REACT_APP_PROJECTID,
+    storageBucket: process.env.REACT_APP_STORAGEBUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
+    appId: process.env.REACT_APP_APPID
 };
 
 // Initialize Firebase
