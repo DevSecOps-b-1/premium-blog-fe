@@ -11,7 +11,6 @@ export const HomePage = () => {
             const collRef = collection(db, 'blog-posts')
             const data = await getDocs(collRef)
             setBlogPosts(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-            console.log('---')
         }
         fetchPosts()
     }, [])

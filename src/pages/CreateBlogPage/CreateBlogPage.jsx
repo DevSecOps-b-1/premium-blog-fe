@@ -25,7 +25,6 @@ export const CreateBlogPage = () => {
         const collRef = collection(db, 'blog-posts');
         addDoc(collRef, postData).then(() => {
             navigate(`/author/${auth.currentUser.uid}`)
-            console.log(postData);
         });
 
     }
