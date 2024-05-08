@@ -27,7 +27,7 @@ export const AuthorsBlogPage = () => {
         <main className="py-10">
             <div className="max-w-screen-xl m-auto">
                 {isAuthors && (
-                    <section className="h-fit p-5 rounded-lg shadow fixed justify-self-end">
+                    <section className="h-fit p-5 rounded-lg shadow sm:fixed mb-5 justify-self-end">
                         <div>
                             <img className="mr-4 w-16 h-16 rounded-full border" src={auth.currentUser.photoURL} alt="Profile" />
                             <div className="p-3">
@@ -42,7 +42,7 @@ export const AuthorsBlogPage = () => {
                     </section>
                 )}
 
-                <ul className={`${isAuthors ? 'ms-72' : ''} flex flex-col gap-5`}>
+                <ul className={`${isAuthors ? 'sm:ms-72' : ''} flex flex-col gap-5`}>
                     {blogPosts && blogPosts.map(post => (
                         <BlogPreviewCard key={post.id} post={post} authors={id} toggle={toggle} setToggle={setToggle} />
                     ))}

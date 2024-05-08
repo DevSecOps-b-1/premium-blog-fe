@@ -18,4 +18,5 @@ code {
 
 main {
   min-height: 85vh;
+  padding-inline: 3vw;
 }

@@ -30,7 +30,7 @@ export const CreateBlogPage = () => {
     }
 
     return (
-        <main className="p-16">
+        <main className="sm:p-16">
             <div className="max-w-screen-lg m-auto text-xl">
                 <h1 className="text-center text-3xl font-semibold mb-7">Create Blog Post</h1>
                 <form ref={formRef} onSubmit={handleSubmitPost} className="flex flex-col">

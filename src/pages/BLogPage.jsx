@@ -49,7 +49,7 @@ export const BlogPage = () => {
         <main className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
             {/* <!-- Main modal --> */}
             <div id="deleteModal" className={`${showModal ? '' : 'hidden'} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-modal md:h-full backdrop-blur`}>
-                <div className="relative p-4 w-full max-w-screen-md h-full md:h-auto">
+                <div className="relative p-2 sm:p-4 w-full max-w-screen-md h-full md:h-auto">
                     {/* <!-- Modal content --> */}
                     <div className="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
                         <div className="max-w-screen-lg m-auto text-xl">
@@ -58,7 +58,7 @@ export const BlogPage = () => {
                                 <span className="sr-only">Close modal</span>
                             </button>
                             <h1 className="text-center text-3xl font-semibold mb-7">Edit Blog Post</h1>
-                            <form onSubmit={handleEdit} className="flex flex-col p-10">
+                            <form onSubmit={handleEdit} className="flex flex-col sm:p-10">
                                 <input onChange={(e) => setEditTitle(e.target.value)} value={editTitle} type="text" id="titleEdit" name="titleEdit" placeholder="title here..." className="mb-5 text-3xl p-3 outline-none" />
                                 <textarea onChange={(e) => setEditContent(e.target.value)} value={editContent} id="contentEdit" name="contentEdit" placeholder="content here..." className="p-3 mb-5 outline-none min-h-96" />
                                 <button type="submit" className="w-fit self-end text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Submit</button>
@@ -80,7 +80,7 @@ export const BlogPage = () => {
                                 </div>
                             </div>
                         </address>
-                        <h1 className="flex justify-between mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">
+                        <h1 className="flex justify-between items-center mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">
                             {post && post.title}
                             {post && auth.currentUser && post.author.id === auth.currentUser.uid && (
                                 <button onClick={() => setShowModal(true)} className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-gray-700 rounded-lg hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
