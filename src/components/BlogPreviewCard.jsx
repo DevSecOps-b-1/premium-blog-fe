@@ -1,10 +1,11 @@
 import { deleteDoc, doc } from "firebase/firestore";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase/config";
 
 export const BlogPreviewCard = ({ post, authors, toggle, setToggle }) => {
     let { content } = post;
     const isAuthors = auth.currentUser && auth.currentUser.uid === authors ? true : false;
+    const navigate = useNavigate()
 
     let postDate = post.createdAt.toDate().toString();
     postDate = postDate.split(' ').splice(1, 3).join(' ');
@@ -17,6 +18,14 @@ export const BlogPreviewCard = ({ post, authors, toggle, setToggle }) => {
         deleteDoc(docRef).then(() => {
             setToggle(!toggle)
         })
+    }
+
+    function handleAuthorButton() {
+        if (!auth.currentUser) {
+            alert('You must be logged in to view this')
+        } else {
+            navigate(`/author/${post.author.id}`)
+        }
     }
 
     return (
@@ -39,9 +48,9 @@ export const BlogPreviewCard = ({ post, authors, toggle, setToggle }) => {
                 {!isAuthors && (
                     <span>
                         <span className="text-gray-400">Author :</span>
-                        <Link to={`/author/${post.author.id}`} className="ms-2 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-gray-400 hover:bg-gray-700 dark:bg-gray-600 dark:hover:bg-gray-700">
+                        <buton onClick={handleAuthorButton} className={`ms-2 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-gray-400 hover:bg-gray-700 dark:bg-gray-600 dark:hover:bg-gray-700 cursor-pointer`}>
                             {post.author.name}
-                        </Link>
+                        </buton>
                     </span>
                 )}
             </div>
