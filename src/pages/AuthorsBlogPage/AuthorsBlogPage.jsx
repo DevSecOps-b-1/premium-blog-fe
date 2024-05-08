@@ -1,8 +1,9 @@
 import { collection, getDocs, query, where } from "firebase/firestore"
 import { useEffect, useState } from "react"
-import { BlogPreviewCard } from "../../components/BlogPreviewCard"
 import { db, auth } from "../../firebase/config"
 import { useParams } from "react-router-dom"
+import { BlogPreviewCard } from "../../components/BlogPreviewCard"
+import { AuthorProfile } from "./components/AuthorProfile"
 
 export const AuthorsBlogPage = () => {
     const { id } = useParams() // get post id from  url
@@ -27,19 +28,7 @@ export const AuthorsBlogPage = () => {
         <main className="py-10">
             <div className="max-w-screen-xl m-auto">
                 {isAuthors && (
-                    <section className="h-fit p-5 rounded-lg shadow sm:fixed mb-5 justify-self-end">
-                        <div>
-                            <img className="mr-4 w-16 h-16 rounded-full border" src={auth.currentUser.photoURL} alt="Profile" />
-                            <div className="p-3">
-                                Name:
-                                <p rel="author" className="text-lg mb-3 ms-2 font-semibold text-gray-900 dark:text-white">{auth.currentUser.displayName}</p>
-
-                                Email:
-                                <p className="text-lg mb-3 ms-2 font-semibold text-gray-900 dark:text-white">{auth.currentUser.email}</p>
-                            </div>
-                        </div>
-                        <div className="p-3 text-lg font-semibold text-gray-900 dark:text-white border rounded-md shadow">Total post: {blogPosts.length}</div>
-                    </section>
+                    <AuthorProfile auth={auth} blogPosts={blogPosts.length} />
                 )}
 
                 <ul className={`${isAuthors ? 'sm:ms-72' : ''} flex flex-col gap-5`}>

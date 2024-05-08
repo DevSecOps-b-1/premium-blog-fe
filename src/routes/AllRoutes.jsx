@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom"
-import { HomePage } from "../pages/HomePage/HomePage"
-import { CreateBlogPage } from "../pages/CreateBlogPage/CreateBlogPage"
+import { HomePage } from "../pages/HomePage"
+import { CreateBlogPage } from "../pages/CreateBlogPage"
 import { BlogPage } from "../pages/BlogPage"
 import { AuthorsBlogPage } from "../pages/AuthorsBlogPage/AuthorsBlogPage"
 import { ProtectedRoutes } from "./ProtectedRoutes"
