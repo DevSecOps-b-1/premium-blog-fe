@@ -47,8 +47,8 @@ export const BlogPreviewCard = ({ post, isAuthors, toggle, setToggle }) => {
 
                 {!isAuthors && (
                     <span>
-                        <span className="text-gray-400">Author :</span>
-                        <button onClick={handleAuthorButton} className={`ms-2 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-gray-400 hover:bg-gray-700 dark:bg-gray-600 dark:hover:bg-gray-700 cursor-pointer`}>
+                        <span className="text-gray-400 text-xs md:text-sm">Author :</span>
+                        <button onClick={handleAuthorButton} className={`ms-2 inline-flex items-center px-3 py-2 font-medium text-center text-white bg-gray-400 hover:bg-gray-700 dark:bg-gray-600 dark:hover:bg-gray-700 cursor-pointer`}>
                             {post.author.name}
                         </button>
                     </span>
