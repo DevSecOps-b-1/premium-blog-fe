@@ -44,19 +44,19 @@ export const BlogPage = () => {
           <header className="mb-4 lg:mb-6 not-format">
             <address className="flex items-center mb-6 not-italic">
               <div className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
-                <img
+                {/* <img
                   className="mr-4 w-16 h-16 rounded-full border"
                   src={post && post.author.photo}
                   alt="Profile"
-                />
+                /> */}
                 <div>
-                  <Link
+                  {/* <Link
                     to={post && `/author/${post.author.id}`}
                     rel="author"
                     className="text-xl font-bold text-gray-900 dark:text-white"
                   >
                     {post && post.author.name}
-                  </Link>
+                  </Link> */}
                   <p className="text-base text-gray-500 dark:text-gray-400">
                     {date}
                   </p>

@@ -1,18 +1,16 @@
 // import { deleteDoc, doc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
+import { convertDate, createExcerpt } from "../lib/postHelper";
 // import { auth, db } from "../firebase/config";
 
 export const BlogPreviewCard = ({ post, isAuthors, toggle, setToggle }) => {
   const navigate = useNavigate();
 
   // create a date to show to the post preview
-  let postDate = post.createdAt.toDate().toString();
-  postDate = postDate.split(" ").splice(1, 3).join(" ");
+  let postDate = convertDate(post.created_at);
 
   // create a post content preview
-  let contentPreview = post.content.split(" ");
-  if (contentPreview.length > 35)
-    contentPreview = contentPreview.slice(0, 35).join(" ");
+  let contentPreview = createExcerpt(post.content);
 
   async function handleDelete() {
     // const docRef = doc(db, 'blog-posts', post.id);
@@ -21,13 +19,13 @@ export const BlogPreviewCard = ({ post, isAuthors, toggle, setToggle }) => {
     // })
   }
 
-  function handleAuthorButton() {
-    // if (!auth.currentUser) {
-    //     alert('You must be logged in to view this')
-    // } else {
-    //     navigate(`/author/${post.author.id}`)
-    // }
-  }
+  // function handleAuthorButton() {
+  //   if (!auth.currentUser) {
+  //       alert('You must be logged in to view this')
+  //   } else {
+  //       navigate(`/author/${post.author.id}`)
+  //   }
+  // }
 
   return (
     <div className="w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -58,7 +56,7 @@ export const BlogPreviewCard = ({ post, isAuthors, toggle, setToggle }) => {
           </button>
         )}
 
-        {!isAuthors && (
+        {/* {!isAuthors && (
           <span>
             <span className="text-gray-400 text-xs md:text-sm">Author :</span>
             <button
@@ -68,7 +66,7 @@ export const BlogPreviewCard = ({ post, isAuthors, toggle, setToggle }) => {
               {post.author.name}
             </button>
           </span>
-        )}
+        )} */}
       </div>
     </div>
   );
