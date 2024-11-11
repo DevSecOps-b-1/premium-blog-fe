@@ -1,6 +1,6 @@
+import axios from "axios";
 import { useState } from "react";
-// import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
-// import { db } from "../../../firebase/config";
+import { updateBlogRoute } from "../../../routes/APIRoutes";
 
 export const EditFormModal = ({
   showModal,
@@ -13,18 +13,20 @@ export const EditFormModal = ({
   const [editTitle, setEditTitle] = useState(post.title); // title value for title edit input
   const [editContent, setEditContent] = useState(post.content); // content value for content edit input
 
-  function handleEdit(e) {
-    // e.preventDefault();
-    // const editedPost = {
-    //     title: e.target.titleEdit.value,
-    //     content: e.target.contentEdit.value,
-    //     updatedAt: serverTimestamp()
-    // }
-    // const docRef = doc(db, 'blog-posts', id)
-    // updateDoc(docRef, editedPost).then(() => {
-    //     setRenderToggle(!renderToggle);
-    //     setShowModal(false);
-    // })
+  async function handleEdit(e) {
+    e.preventDefault();
+    const editedPost = {
+      postId: id,
+      title: e.target.titleEdit.value,
+      content: e.target.contentEdit.value,
+      isPremium: e.target.isPremium.value,
+    };
+    const { data } = await axios.post(updateBlogRoute, editedPost);
+    console.log(data);
+    if (data.success) {
+      setRenderToggle(!renderToggle);
+      setShowModal(false);
+    }
   }
   return (
     <div
@@ -79,6 +81,17 @@ export const EditFormModal = ({
                 placeholder="content here..."
                 className="p-3 mb-5 outline-none min-h-96"
               />
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  name="isPremium"
+                  id="isPremium"
+                  className="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-blue-500 focus:ring-offset-0 dark:bg-gray-700 dark:focus:ring-blue-600"
+                />
+                <label htmlFor="isPremium" className="ml-2">
+                  Premium Post
+                </label>
+              </div>
               <button
                 type="submit"
                 className="w-fit self-end text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"

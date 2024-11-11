@@ -24,7 +24,10 @@ export const AllRoutes = ({ isAuth, setIsAuth, userStatus }) => {
           </ProtectedRoutes>
         }
       />
-      <Route path="blog/:id" element={<BlogPage isAuth={isAuth} />} />
+      <Route
+        path="blog/:id"
+        element={<BlogPage isAuth={isAuth} userStatus={userStatus} />}
+      />
       <Route
         path="/author"
         element={

@@ -13,3 +13,4 @@ export const addCommentRoute = `${process.env.REACT_APP_SERVER_HOST}/add-comment
 
 // autthor
 export const CreateBlogRoute = `${process.env.REACT_APP_SERVER_HOST}/add-post`;
+export const updateBlogRoute = `${process.env.REACT_APP_SERVER_HOST}/edit-post`;
