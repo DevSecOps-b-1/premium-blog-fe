@@ -14,11 +14,11 @@ export const AllRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route
-        path="create-blog"
+        path="/create-blog"
         element={
-          <ProtectedRoutes>
-            <CreateBlogPage />
-          </ProtectedRoutes>
+          // <ProtectedRoutes>
+          <CreateBlogPage />
+          // </ProtectedRoutes>
         }
       />
       <Route path="blog/:id" element={<BlogPage />} />
