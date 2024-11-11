@@ -19,16 +19,16 @@ export const AllRoutes = ({ isAuth, setIsAuth, userStatus }) => {
       <Route
         path="create-blog"
         element={
-          <ProtectedRoutes>
+          <ProtectedRoutes userStatus={userStatus}>
             <CreateBlogPage />
           </ProtectedRoutes>
         }
       />
       <Route path="blog/:id" element={<BlogPage isAuth={isAuth} />} />
       <Route
-        path="author/:id"
+        path="/author"
         element={
-          <ProtectedRoutes>
+          <ProtectedRoutes userStatus={userStatus}>
             <AuthorsBlogPage />
           </ProtectedRoutes>
         }

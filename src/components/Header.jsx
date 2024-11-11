@@ -2,7 +2,7 @@ import { useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { deleteCookie, getCookie } from "../lib/cookieHelper";
 
-export const Header = ({ isAuth, setIsAuth, isAuthor }) => {
+export const Header = ({ isAuth, setIsAuth, userStatus }) => {
   const navigate = useNavigate();
   const [showNav, setShowNav] = useState(false); // to show navigation on mobile screen
 
@@ -89,7 +89,7 @@ export const Header = ({ isAuth, setIsAuth, isAuthor }) => {
                   Home
                 </NavLink>
               </li>
-              {isAuth && isAuthor && (
+              {isAuth && userStatus.is_author && (
                 <li>
                   <NavLink
                     to="create-blog"
