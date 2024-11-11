@@ -4,7 +4,6 @@ import { convertDate, createExcerpt } from "../lib/postHelper";
 export const BlogPreviewCard = ({
   post,
   isHome,
-  isAuthors,
   userStatus,
   toggle,
   setToggle,
@@ -12,8 +11,7 @@ export const BlogPreviewCard = ({
   const navigate = useNavigate();
 
   // create a date to show to the post preview
-  let postDate = post.created_at;
-  // let postDate = convertDate(post.created_at);
+  let postDate = convertDate(post.created_at);
 
   // create a post content preview
   let contentPreview = createExcerpt(post.content);
@@ -24,14 +22,6 @@ export const BlogPreviewCard = ({
     //     setToggle(!toggle)
     // })
   }
-
-  // function handleAuthorButton() {
-  //   if (!auth.currentUser) {
-  //       alert('You must be logged in to view this')
-  //   } else {
-  //       navigate(`/author/${post.author.id}`)
-  //   }
-  // }
 
   return (
     <div className="w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -74,7 +64,7 @@ export const BlogPreviewCard = ({
           </button>
         )}
 
-        {!isHome && isAuthors && (
+        {!isHome && userStatus.is_author && (
           <button
             onClick={handleDelete}
             className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
