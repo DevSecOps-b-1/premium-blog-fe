@@ -10,12 +10,12 @@ export const CreateBlogPage = () => {
     const blogData = {
       title: e.target.titleInput.value,
       content: e.target.contentInput.value,
-      isPremium: e.target.isPremium.value,
+      isPremium: e.target.isPremium.checked,
     };
     try {
       const { response } = await axios.post(CreateBlogRoute, blogData);
 
-      console.log("Post added successfully:", response.data);
+      console.log("Post added successfully:");
     } catch (error) {
       console.error("Error adding post:", error);
     }

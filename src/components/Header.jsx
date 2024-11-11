@@ -101,16 +101,16 @@ export const Header = ({ isAuth, setIsAuth, userStatus }) => {
                   </NavLink>
                 </li>
               )}
-              {isAuth && (
+              {isAuth && userStatus.is_author && (
                 <li>
-                  {/* <NavLink
-                    to={auth.currentUser && `author/${auth.currentUser.uid}`}
+                  <NavLink
+                    to={`/author`}
                     className={({ isActive }) =>
                       isActive ? classActive : classInactive
                     }
                   >
                     My Blog
-                  </NavLink> */}
+                  </NavLink>
                 </li>
               )}
               {isAuth ? (

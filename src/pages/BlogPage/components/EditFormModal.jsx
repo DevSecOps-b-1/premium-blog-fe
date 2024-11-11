@@ -12,6 +12,7 @@ export const EditFormModal = ({
 }) => {
   const [editTitle, setEditTitle] = useState(post.title); // title value for title edit input
   const [editContent, setEditContent] = useState(post.content); // content value for content edit input
+  const [editPremium, setEditPremium] = useState(post.is_premium); // content value for content edit input
 
   async function handleEdit(e) {
     e.preventDefault();
@@ -19,7 +20,7 @@ export const EditFormModal = ({
       postId: id,
       title: e.target.titleEdit.value,
       content: e.target.contentEdit.value,
-      isPremium: e.target.isPremium.value,
+      isPremium: e.target.isPremium.checked,
     };
     const { data } = await axios.post(updateBlogRoute, editedPost);
     console.log(data);
@@ -83,9 +84,11 @@ export const EditFormModal = ({
               />
               <div className="flex items-center">
                 <input
+                  onChange={(e) => setEditPremium(e.target.checked)}
                   type="checkbox"
                   name="isPremium"
                   id="isPremium"
+                  checked={editPremium}
                   className="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-blue-500 focus:ring-offset-0 dark:bg-gray-700 dark:focus:ring-blue-600"
                 />
                 <label htmlFor="isPremium" className="ml-2">
