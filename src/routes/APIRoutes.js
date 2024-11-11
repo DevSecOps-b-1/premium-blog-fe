@@ -10,3 +10,6 @@ export const getCommentsRoute = `${process.env.REACT_APP_SERVER_HOST}/get-commen
 // user
 export const getUserStatusRoute = `${process.env.REACT_APP_SERVER_HOST}/get-userstatus`;
 export const addCommentRoute = `${process.env.REACT_APP_SERVER_HOST}/add-comment`;
+
+// autthor
+export const CreateBlogRoute = `${process.env.REACT_APP_SERVER_HOST}/add-post`;
