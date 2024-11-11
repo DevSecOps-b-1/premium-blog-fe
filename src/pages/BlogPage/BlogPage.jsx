@@ -2,11 +2,18 @@ import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { EditFormModal } from "./components/EditFormModal";
 import axios from "axios";
-import { getPostRoute } from "../../routes/APIRoutes";
+import {
+  addCommentRoute,
+  getCommentsRoute,
+  getPostRoute,
+} from "../../routes/APIRoutes";
+import { CommentBubble } from "../../components/CommentBubble";
 
-export const BlogPage = () => {
+export const BlogPage = ({ isAuth }) => {
+  const navigate = useNavigate();
   const { id } = useParams(); // get post id from  url
   const [post, setPost] = useState(); // set post
+  const [comments, setComments] = useState(); // set comments
   const [date, setDate] = useState(""); // set date
 
   const [showModal, setShowModal] = useState(false);
@@ -24,6 +31,45 @@ export const BlogPage = () => {
 
     getPost();
   }, [id, renderToggle]);
+
+  useEffect(() => {
+    async function getComments() {
+      const { data } = await axios.post(getCommentsRoute, { postId: id });
+      if (data.success) {
+        const comments = Object.keys(data) // Convert only the post items to an array
+          .filter((key) => !isNaN(key)) // Keep only numeric keys
+          .map((key) => data[key]); // Map the numeric keys to get post objects
+        setComments(comments);
+        console.log(comments);
+      }
+    }
+
+    getComments();
+  }, [renderToggle]);
+
+  async function handleAddComment(e) {
+    e.preventDefault();
+    if (!isAuth) {
+      // redirect to login page if user is not logged in
+      navigate("/login");
+      return;
+    }
+    if (e.target.content.value === "") {
+      alert("Please fill out the comment form to add a comment");
+      return;
+    }
+
+    // send comment
+    const comment = {
+      postId: post.id,
+      userId: +isAuth,
+      commentText: e.target.content.value,
+    };
+    const { data } = await axios.post(addCommentRoute, comment);
+    console.log(data);
+    e.target.content.value = "";
+    setRenderToggle(!renderToggle);
+  }
 
   return (
     <main className="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
@@ -99,15 +145,15 @@ export const BlogPage = () => {
 
           {/* comment section */}
           <section className="md:mt-32 mt-20">
-            <form>
+            <form onSubmit={handleAddComment} className="mb-14">
               <div className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
                 <div className="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
                   <textarea
+                    name="content"
                     id="comment"
                     rows="4"
-                    className="w-full p-2 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
+                    className="w-full p-2 text-md text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
                     placeholder="Write a comment..."
-                    required
                   ></textarea>
                 </div>
                 <div className="flex items-center justify-end px-3 py-2 border-t dark:border-gray-600">
@@ -120,6 +166,10 @@ export const BlogPage = () => {
                 </div>
               </div>
             </form>
+            {comments &&
+              comments.map((comment) => (
+                <CommentBubble key={comment.id} comment={comment} />
+              ))}
           </section>
         </article>
       </div>

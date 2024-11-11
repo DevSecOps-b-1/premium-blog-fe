@@ -23,7 +23,11 @@ function App() {
   return (
     <div className="App">
       <Header isAuth={isAuth} setIsAuth={setIsAuth} />
-      <AllRoutes setIsAuth={setIsAuth} userStatus={userStatus} />
+      <AllRoutes
+        isAuth={isAuth}
+        setIsAuth={setIsAuth}
+        userStatus={userStatus}
+      />
       <Footer />
     </div>
   );

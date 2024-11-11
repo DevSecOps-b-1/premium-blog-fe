@@ -1,6 +1,18 @@
-export function convertDate(date) {
-  let postDate = date.toDate().toString();
-  return postDate.split(" ").splice(1, 3).join(" ");
+export function convertDate(isoString) {
+  // Create a new Date object from the ISO string
+  const date = new Date(isoString);
+
+  // Format components
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+
+  // Convert to readable format using `toLocaleDateString`
+  return date.toLocaleDateString("en-US", options);
 }
 
 export function createExcerpt(content) {

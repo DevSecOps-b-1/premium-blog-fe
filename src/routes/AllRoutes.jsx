@@ -7,7 +7,7 @@ import { ProtectedRoutes } from "./ProtectedRoutes";
 import { Login } from "../pages/Auth/Login";
 import { Register } from "../pages/Auth/Register";
 
-export const AllRoutes = ({ setIsAuth, userStatus }) => {
+export const AllRoutes = ({ isAuth, setIsAuth, userStatus }) => {
   return (
     <Routes>
       <Route
@@ -24,7 +24,7 @@ export const AllRoutes = ({ setIsAuth, userStatus }) => {
           </ProtectedRoutes>
         }
       />
-      <Route path="blog/:id" element={<BlogPage />} />
+      <Route path="blog/:id" element={<BlogPage isAuth={isAuth} />} />
       <Route
         path="author/:id"
         element={
