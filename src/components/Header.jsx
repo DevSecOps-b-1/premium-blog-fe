@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { deleteCookie, getCookie } from "../lib/cookieHelper";
+import axios from "axios";
+import { updateSubscribtionRoute } from "../routes/APIRoutes";
 
 export const Header = ({ isAuth, setIsAuth, userStatus }) => {
   const navigate = useNavigate();
@@ -15,6 +17,16 @@ export const Header = ({ isAuth, setIsAuth, userStatus }) => {
   function handleLogout() {
     deleteCookie("userId");
     setIsAuth(false);
+    navigate("/");
+    // Force a reload of the page
+    window.location.reload();
+  }
+
+  async function handleSubscribe() {
+    const { data } = await axios.post(updateSubscribtionRoute, {
+      userId: isAuth,
+      isPremium: !userStatus.is_premium,
+    });
     navigate("/");
     // Force a reload of the page
     window.location.reload();
@@ -88,6 +100,14 @@ export const Header = ({ isAuth, setIsAuth, userStatus }) => {
                 >
                   Home
                 </NavLink>
+              </li>
+              <li>
+                <button
+                  onClick={handleSubscribe}
+                  className={`focus:outline-none text-white bg-yellow-600 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-600 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900`}
+                >
+                  {userStatus.is_premium ? "Unsubscribe" : "Upgrade to premium"}
+                </button>
               </li>
               {isAuth && userStatus.is_author && (
                 <li>
