@@ -1,5 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { convertDate, createExcerpt } from "../lib/postHelper";
+import { deleteBlogRoute } from "../routes/APIRoutes";
+import axios from "axios";
 
 export const BlogPreviewCard = ({
   post,
@@ -17,10 +19,9 @@ export const BlogPreviewCard = ({
   let contentPreview = createExcerpt(post.content);
 
   async function handleDelete() {
-    // const docRef = doc(db, 'blog-posts', post.id);
-    // deleteDoc(docRef).then(() => {
-    //     setToggle(!toggle)
-    // })
+    const { data } = await axios.post(deleteBlogRoute, { postId: post.id });
+    console.log(data);
+    setToggle(!toggle);
   }
 
   return (
