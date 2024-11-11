@@ -1,13 +1,9 @@
-import { signInWithPopup, signOut } from "firebase/auth";
 import { useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
-import { auth, provider } from "../firebase/config";
+import { deleteCookie, getCookie } from "../lib/cookieHelper";
 
-export const Header = () => {
+export const Header = ({ isAuth, setIsAuth, isAuthor }) => {
   const navigate = useNavigate();
-  const [isAuth, setIsAuth] = useState(
-    JSON.parse(localStorage.getItem("BlogmateAuth"))
-  ); // is user logged in?
   const [showNav, setShowNav] = useState(false); // to show navigation on mobile screen
 
   // navlink active styles
@@ -16,21 +12,12 @@ export const Header = () => {
   const classInactive =
     "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700";
 
-  async function handleLogin() {
-    // signInWithPopup(auth, provider).then(() => {
-    //     setIsAuth(true);
-    //     localStorage.setItem('BlogmateAuth', JSON.stringify(true));
-    //     navigate('/');
-    // }).catch((error) => {
-    //     console.error(error);
-    // })
-  }
-
   function handleLogout() {
-    // signOut(auth);
-    // setIsAuth(false);
-    // localStorage.setItem("BlogmateAuth", JSON.stringify(false));
-    // navigate("/");
+    deleteCookie("userId");
+    setIsAuth(false);
+    navigate("/");
+    // Force a reload of the page
+    window.location.reload();
   }
 
   return (
@@ -102,7 +89,7 @@ export const Header = () => {
                   Home
                 </NavLink>
               </li>
-              {isAuth && (
+              {isAuth && isAuthor && (
                 <li>
                   <NavLink
                     to="create-blog"

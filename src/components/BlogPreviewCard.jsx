@@ -1,13 +1,19 @@
-// import { deleteDoc, doc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import { convertDate, createExcerpt } from "../lib/postHelper";
-// import { auth, db } from "../firebase/config";
 
-export const BlogPreviewCard = ({ post, isAuthors, toggle, setToggle }) => {
+export const BlogPreviewCard = ({
+  post,
+  isHome,
+  isAuthors,
+  userStatus,
+  toggle,
+  setToggle,
+}) => {
   const navigate = useNavigate();
 
   // create a date to show to the post preview
-  let postDate = convertDate(post.created_at);
+  let postDate = post.created_at;
+  // let postDate = convertDate(post.created_at);
 
   // create a post content preview
   let contentPreview = createExcerpt(post.content);
@@ -42,12 +48,33 @@ export const BlogPreviewCard = ({ post, isAuthors, toggle, setToggle }) => {
       </p>
       <div className="flex w-full justify-between">
         <Link
-          to={`/blog/${post.id}`}
+          to={
+            post.is_premium && !userStatus.is_premium ? `/` : `/blog/${post.id}`
+          }
           className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           Read more
         </Link>
-        {isAuthors && (
+        {post.is_premium && (
+          <button
+            type="button"
+            className="focus:outline-none text-white bg-yellow-500 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-400 font-medium rounded-lg text-sm p-1 me-2 mb-2 dark:focus:ring-yellow-900"
+          >
+            <svg
+              className="w-6 h-6 text-white"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
+            </svg>
+          </button>
+        )}
+
+        {!isHome && isAuthors && (
           <button
             onClick={handleDelete}
             className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
@@ -55,18 +82,6 @@ export const BlogPreviewCard = ({ post, isAuthors, toggle, setToggle }) => {
             Delete
           </button>
         )}
-
-        {/* {!isAuthors && (
-          <span>
-            <span className="text-gray-400 text-xs md:text-sm">Author :</span>
-            <button
-              onClick={handleAuthorButton}
-              className={`ms-2 inline-flex items-center px-3 py-2 font-medium text-center text-white bg-gray-400 hover:bg-gray-700 dark:bg-gray-600 dark:hover:bg-gray-700 cursor-pointer`}
-            >
-              {post.author.name}
-            </button>
-          </span>
-        )} */}
       </div>
     </div>
   );

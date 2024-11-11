@@ -2,8 +2,9 @@ import axios from "axios";
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { registerRoute } from "../../routes/APIRoutes";
+import { deleteCookie, getCookie } from "../../lib/cookieHelper";
 
-export const Register = () => {
+export const Register = ({ setIsAuth }) => {
   const navigate = useNavigate();
 
   async function handleRegister(e) {
@@ -15,9 +16,16 @@ export const Register = () => {
     };
 
     const { data } = await axios.post(registerRoute, registerData);
-    console.log(data);
+    // Set a cookie in the browser
+    if (data.success) {
+      deleteCookie("userId");
+      document.cookie = `userId=${data.id}; path=/; max-age=86400;`;
+      setIsAuth(getCookie("userId"));
+    }
 
     navigate("/");
+    // Force a reload of the page
+    window.location.reload();
   }
 
   return (
