@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
-import { deleteCookie, getCookie } from "../lib/cookieHelper";
+import { deleteCookie } from "../lib/cookieHelper";
 import axios from "axios";
 import { updateSubscribtionRoute } from "../routes/APIRoutes";
 
@@ -23,7 +23,7 @@ export const Header = ({ isAuth, setIsAuth, userStatus }) => {
   }
 
   async function handleSubscribe() {
-    const { data } = await axios.post(updateSubscribtionRoute, {
+    await axios.post(updateSubscribtionRoute, {
       userId: isAuth,
       isPremium: !userStatus.is_premium,
     });

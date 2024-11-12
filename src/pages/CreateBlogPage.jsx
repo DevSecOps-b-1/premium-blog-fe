@@ -13,8 +13,7 @@ export const CreateBlogPage = () => {
       isPremium: e.target.isPremium.checked,
     };
     try {
-      const { response } = await axios.post(CreateBlogRoute, blogData);
-
+      await axios.post(CreateBlogRoute, blogData);
       console.log("Post added successfully:");
     } catch (error) {
       console.error("Error adding post:", error);

@@ -1,5 +1,3 @@
-import axios from "axios";
-
 export const AuthorProfile = ({ isAuth, blogPosts }) => {
   return (
     <section className="h-fit p-5 rounded-lg shadow sm:fixed mb-5 justify-self-end">

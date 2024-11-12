@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { EditFormModal } from "./components/EditFormModal";
 import axios from "axios";
 import {
@@ -14,13 +14,8 @@ export const BlogPage = ({ isAuth, userStatus }) => {
 
   const { id } = useParams(); // get post id from  url
   const [post, setPost] = useState(); // set post
-  if (post) {
-  }
-
   const [comments, setComments] = useState(); // set comments
-  const [date, setDate] = useState(""); // set date
-
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false); // modal toggle
   const [renderToggle, setRenderToggle] = useState(false); // to update if the post is edited
 
   useEffect(() => {
@@ -30,10 +25,11 @@ export const BlogPage = ({ isAuth, userStatus }) => {
         isPremiumUser: userStatus.is_premium || false,
       });
       setPost(data);
-      if (!post?.content) navigate("/");
+      if (!data?.content) navigate("/");
     }
 
     getPost();
+    // eslint-disable-next-line
   }, [id, renderToggle]);
 
   useEffect(() => {
@@ -48,6 +44,7 @@ export const BlogPage = ({ isAuth, userStatus }) => {
     }
 
     if (post?.content) getComments();
+    // eslint-disable-next-line
   }, [renderToggle, post]);
 
   async function handleAddComment(e) {
@@ -68,7 +65,7 @@ export const BlogPage = ({ isAuth, userStatus }) => {
       userId: +isAuth,
       commentText: e.target.content.value,
     };
-    const { data } = await axios.post(addCommentRoute, comment);
+    await axios.post(addCommentRoute, comment);
     e.target.content.value = "";
     setRenderToggle(!renderToggle);
   }
@@ -104,9 +101,9 @@ export const BlogPage = ({ isAuth, userStatus }) => {
                   >
                     {post && post.author.name}
                   </Link> */}
-                  <p className="text-base text-gray-500 dark:text-gray-400">
+                  {/* <p className="text-base text-gray-500 dark:text-gray-400">
                     {date}
-                  </p>
+                  </p> */}
                 </div>
               </div>
             </address>

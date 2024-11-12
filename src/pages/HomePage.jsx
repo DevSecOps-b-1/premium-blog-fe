@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { BlogPreviewCard } from "../components/BlogPreviewCard";
 import axios from "axios";
 import { getAllPostsRoute } from "../routes/APIRoutes";
-import { getCookie } from "../lib/cookieHelper";
 
 export const HomePage = ({ setIsAuth, userStatus }) => {
   const [blogPosts, setBlogPosts] = useState([]);
@@ -16,7 +15,6 @@ export const HomePage = ({ setIsAuth, userStatus }) => {
           .map((key) => data[key]); // Map the numeric keys to get post objects
         setBlogPosts(posts);
       }
-      setIsAuth(getCookie("userId")); // check authentication
     };
 
     fetchPosts();

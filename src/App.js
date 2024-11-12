@@ -17,6 +17,7 @@ function App() {
     }
     if (isAuth) getUserStatus(+isAuth);
     else console.log("user not logged in");
+    // eslint-disable-next-line
   }, []);
 
   return (

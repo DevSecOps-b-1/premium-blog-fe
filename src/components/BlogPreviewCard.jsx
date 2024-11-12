@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { convertDate, createExcerpt } from "../lib/postHelper";
 import { deleteBlogRoute } from "../routes/APIRoutes";
 import axios from "axios";
@@ -10,8 +10,6 @@ export const BlogPreviewCard = ({
   toggle,
   setToggle,
 }) => {
-  const navigate = useNavigate();
-
   // create a date to show to the post preview
   let postDate = convertDate(post.created_at);
 
