@@ -15,14 +15,16 @@ export const Login = ({ setIsAuth }) => {
     };
 
     const { data } = await axios.post(loginRoute, loginData);
-    console.log(data);
+
     // Set a cookie in the browser
-    if (data.success) {
-      deleteCookie("userId");
-      document.cookie = `userId=${data.id}; path=/; max-age=86400;`;
-      setIsAuth(getCookie("userId"));
+    if (data.id == undefined) {
+      alert("incorrect credentials");
+      return;
     }
 
+    deleteCookie("userId");
+    document.cookie = `userId=${data.id}; path=/; max-age=86400;`;
+    setIsAuth(getCookie("userId"));
     navigate("/");
     // Force a reload of the page
     window.location.reload();
