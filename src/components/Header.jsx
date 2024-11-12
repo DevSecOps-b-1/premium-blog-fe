@@ -101,14 +101,6 @@ export const Header = ({ isAuth, setIsAuth, userStatus }) => {
                   Home
                 </NavLink>
               </li>
-              <li>
-                <button
-                  onClick={handleSubscribe}
-                  className={`focus:outline-none text-white bg-yellow-600 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-600 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900`}
-                >
-                  {userStatus.is_premium ? "Unsubscribe" : "Upgrade to premium"}
-                </button>
-              </li>
               {isAuth && userStatus.is_author && (
                 <li>
                   <NavLink
@@ -134,32 +126,46 @@ export const Header = ({ isAuth, setIsAuth, userStatus }) => {
                 </li>
               )}
               {isAuth ? (
-                <li>
-                  <button
-                    onClick={handleLogout}
-                    type="button"
-                    className="mt-5 sm:mt-0 flex items-center gap-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                  >
-                    <svg
-                      className="w-4 h-4 text-gray-300 dark:text-white"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="none"
-                      viewBox="0 0 24 24"
+                <>
+                  <li>
+                    <button
+                      onClick={handleLogout}
+                      type="button"
+                      className="mt-5 sm:mt-0 flex items-center gap-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2"
-                      />
-                    </svg>
-                    Logout
-                  </button>
-                </li>
+                      <svg
+                        className="w-4 h-4 text-gray-300 dark:text-white"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2"
+                        />
+                      </svg>
+                      Logout
+                    </button>
+                  </li>
+                  {!userStatus.is_author && (
+                    <li>
+                      <button
+                        onClick={handleSubscribe}
+                        className={`focus:outline-none text-white bg-yellow-600 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-600 font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:focus:ring-yellow-900`}
+                      >
+                        {userStatus.is_premium
+                          ? "Unsubscribe"
+                          : "Upgrade to premium"}
+                      </button>
+                    </li>
+                  )}
+                </>
               ) : (
                 <li className="self-center flex gap-2">
                   <NavLink
