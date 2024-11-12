@@ -11,8 +11,12 @@ import { CommentBubble } from "../../components/CommentBubble";
 
 export const BlogPage = ({ isAuth, userStatus }) => {
   const navigate = useNavigate();
+
   const { id } = useParams(); // get post id from  url
   const [post, setPost] = useState(); // set post
+  if (post) {
+  }
+
   const [comments, setComments] = useState(); // set comments
   const [date, setDate] = useState(""); // set date
 
@@ -23,9 +27,10 @@ export const BlogPage = ({ isAuth, userStatus }) => {
     async function getPost() {
       const { data } = await axios.post(getPostRoute, {
         postId: id,
-        isPremiumUser: true,
+        isPremiumUser: userStatus.is_premium || false,
       });
       setPost(data);
+      if (!post?.content) navigate("/");
     }
 
     getPost();
@@ -42,8 +47,8 @@ export const BlogPage = ({ isAuth, userStatus }) => {
       }
     }
 
-    getComments();
-  }, [renderToggle]);
+    if (post?.content) getComments();
+  }, [renderToggle, post]);
 
   async function handleAddComment(e) {
     e.preventDefault();
