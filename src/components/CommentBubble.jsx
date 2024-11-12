@@ -5,7 +5,7 @@ export const CommentBubble = ({ comment }) => {
   const date = convertDate(comment.created_at);
 
   return (
-    <div className="flex items-start gap-2.5 mt-5">
+    <li className="flex items-start gap-2.5 mt-5">
       <img
         className="w-8 h-8 rounded-full"
         src="/docs/images/people/profile-picture-3.jpg"
@@ -20,10 +20,11 @@ export const CommentBubble = ({ comment }) => {
             {date}
           </span>
         </div>
-        <p className="text-md font-normal py-2.5 text-gray-900 dark:text-white">
-          {comment.comment_text}
-        </p>
+        <p
+          dangerouslySetInnerHTML={{ __html: comment.comment_text }}
+          className="text-md font-normal py-2.5 text-gray-900 dark:text-white"
+        ></p>
       </div>
-    </div>
+    </li>
   );
 };

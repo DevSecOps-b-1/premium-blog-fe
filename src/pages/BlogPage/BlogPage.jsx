@@ -164,10 +164,12 @@ export const BlogPage = ({ isAuth, userStatus }) => {
                 </div>
               </div>
             </form>
-            {comments &&
-              comments.map((comment) => (
-                <CommentBubble key={comment.id} comment={comment} />
-              ))}
+            <ul>
+              {comments &&
+                comments.map((comment) => (
+                  <CommentBubble key={comment.id} comment={comment} />
+                ))}
+            </ul>
           </section>
         </article>
       </div>
