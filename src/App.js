@@ -13,7 +13,6 @@ function App() {
   useEffect(() => {
     async function getUserStatus(id) {
       const { data } = await axios.post(getUserStatusRoute, { identifier: id });
-      console.log(data);
       setUserStatus(data);
     }
     if (isAuth) getUserStatus(+isAuth);

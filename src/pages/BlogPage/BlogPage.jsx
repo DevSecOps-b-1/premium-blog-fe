@@ -25,7 +25,6 @@ export const BlogPage = ({ isAuth, userStatus }) => {
         postId: id,
         isPremiumUser: true,
       });
-      console.log(data);
       setPost(data);
     }
 
@@ -40,7 +39,6 @@ export const BlogPage = ({ isAuth, userStatus }) => {
           .filter((key) => !isNaN(key)) // Keep only numeric keys
           .map((key) => data[key]); // Map the numeric keys to get post objects
         setComments(comments);
-        console.log(comments);
       }
     }
 
@@ -66,7 +64,6 @@ export const BlogPage = ({ isAuth, userStatus }) => {
       commentText: e.target.content.value,
     };
     const { data } = await axios.post(addCommentRoute, comment);
-    console.log(data);
     e.target.content.value = "";
     setRenderToggle(!renderToggle);
   }

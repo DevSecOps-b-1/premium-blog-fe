@@ -23,7 +23,6 @@ export const EditFormModal = ({
       isPremium: e.target.isPremium.checked,
     };
     const { data } = await axios.post(updateBlogRoute, editedPost);
-    console.log(data);
     if (data.success) {
       setRenderToggle(!renderToggle);
       setShowModal(false);

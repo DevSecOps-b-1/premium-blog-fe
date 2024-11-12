@@ -20,7 +20,6 @@ export const AuthorsBlogPage = () => {
           .filter((key) => !isNaN(key)) // Keep only numeric keys
           .map((key) => data[key]); // Map the numeric keys to get post objects
         setBlogPosts(posts);
-        console.log(posts);
       }
     };
 
