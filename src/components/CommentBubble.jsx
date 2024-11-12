@@ -20,10 +20,10 @@ export const CommentBubble = ({ comment }) => {
             {date}
           </span>
         </div>
-        <p
+        <div
           dangerouslySetInnerHTML={{ __html: comment.comment_text }}
           className="text-md font-normal py-2.5 text-gray-900 dark:text-white"
-        ></p>
+        />
       </div>
     </li>
   );

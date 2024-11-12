@@ -22,7 +22,7 @@ export const BlogPage = ({ isAuth, userStatus }) => {
     async function getPost() {
       const { data } = await axios.post(getPostRoute, {
         postId: id,
-        isPremiumUser: userStatus.is_premium || false,
+        isPremiumUser: true, // broken access control
       });
       setPost(data);
       if (!data?.content) navigate("/");
