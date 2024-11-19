@@ -1,6 +1,7 @@
 # Stage 1
 FROM node:18-alpine AS builder 
 
+ENV REACT_APP_SERVER_HOST http://backend:8080
 WORKDIR /app
 
 COPY package.json package-lock.json ./
