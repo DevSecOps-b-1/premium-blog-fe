@@ -1,21 +1,14 @@
-# Stage 1
 FROM node:18-alpine AS builder 
 
-ENV REACT_APP_SERVER_HOST http://10.34.9.48:3001
+ENV REACT_APP_SERVER_HOST https://localhost:3001
 WORKDIR /app
 
 COPY package.json package-lock.json ./
 RUN npm install
 
+RUN npm install serve
+
 COPY . .
 RUN npm run build
 
-# Stage 2
-FROM nginx:1.27.2-alpine
-
-RUN rm -rf /usr/share/nginx/html/*
-COPY --from=builder /app/build /usr/share/nginx/html
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["serve", "-s", "build"]
