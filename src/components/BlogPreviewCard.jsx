@@ -24,11 +24,20 @@ export const BlogPreviewCard = ({
 
   return (
     <div className="w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      <Link to={`/blog/${post.id}`}>
-        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-          {post.title}
-        </h5>
-      </Link>
+      {
+        post.is_premium && !userStatus.is_premium
+          ?
+          <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            {post.title}
+          </h5>
+          :
+          <Link to={`/blog/${post.id}`}>
+            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+              {post.title}
+            </h5>
+          </Link>
+      }
+
       <p className="max-w-screen-md mb-3 font-normal text-gray-400 dark:text-gray-800">
         {postDate}
       </p>
@@ -40,11 +49,10 @@ export const BlogPreviewCard = ({
           to={
             post.is_premium && !userStatus.is_premium ? `/` : `/blog/${post.id}`
           }
-          className={`${
-            post.is_premium && !userStatus.is_premium
+          className={`${post.is_premium && !userStatus.is_premium
               ? "cursor-not-allowed bg-gray-500"
               : "bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          } inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg`}
+            } inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg`}
         >
           {isHome ? "Read more" : "Edit"}
         </Link>

@@ -8,6 +8,7 @@ import {
   getPostRoute,
 } from "../../routes/APIRoutes";
 import { CommentBubble } from "../../components/CommentBubble";
+import { getCookie } from "../../lib/cookieHelper";
 
 export const BlogPage = ({ isAuth, userStatus }) => {
   const navigate = useNavigate();
@@ -21,8 +22,11 @@ export const BlogPage = ({ isAuth, userStatus }) => {
   useEffect(() => {
     async function getPost() {
       const { data } = await axios.post(getPostRoute, {
-        postId: id,
-        isPremiumUser: true, // broken access control
+        postId: id
+      }, {
+        headers: {
+          Authorization: `Bearer ${getCookie("token")}`
+        }
       });
       setPost(data);
       if (!data?.content) navigate("/");

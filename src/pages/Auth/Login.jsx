@@ -19,12 +19,10 @@ export const Login = ({ setIsAuth }) => {
       const { data } = await axios.post(loginRoute, loginData);
       // Set a cookie in the browser
       if (data.success) {
-        if (!(data[0].email === loginData.email && data[0].password === loginData.password)) {
-          throw new Error("Email or password is incorrect");
-        }
-        deleteCookie("userId");
-        document.cookie = `userId=${data[0].id}; path=/; max-age=86400;`;
-        setIsAuth(getCookie("userId"));
+        console.log('login success');
+        deleteCookie("token");
+        document.cookie = `token=${data.token}; path=/; max-age=86400;`;
+        setIsAuth(getCookie("token"));
   
         navigate("/");
         // Force a reload of the page

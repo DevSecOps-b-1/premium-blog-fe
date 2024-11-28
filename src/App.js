@@ -7,15 +7,19 @@ import axios from "axios";
 import { getUserStatusRoute } from "./routes/APIRoutes";
 
 function App() {
-  const [isAuth, setIsAuth] = useState(getCookie("userId"));
+  const [isAuth, setIsAuth] = useState(getCookie("token"));
   const [userStatus, setUserStatus] = useState(false);
 
   useEffect(() => {
-    async function getUserStatus(id) {
-      const { data } = await axios.post(getUserStatusRoute, { identifier: id });
-      setUserStatus(data);
+    async function getUserStatus() {
+      const { data } = await axios.post(getUserStatusRoute, {}, {
+        headers: {
+          Authorization: `Bearer ${isAuth}`,
+        },
+      });
+        setUserStatus(data);
     }
-    if (isAuth) getUserStatus(+isAuth);
+    if (isAuth) getUserStatus();
     else console.log("user not logged in");
     // eslint-disable-next-line
   }, []);
