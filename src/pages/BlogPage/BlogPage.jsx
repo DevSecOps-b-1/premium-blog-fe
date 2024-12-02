@@ -74,7 +74,11 @@ export const BlogPage = ({ isAuth, userStatus }) => {
       userId: +isAuth,
       commentText: e.target.content.value,
     };
-    await axios.post(addCommentRoute, comment);
+    await axios.post(addCommentRoute, comment, {
+      headers: {
+        Authorization: `Bearer ${isAuth}`,
+      },
+    });
     e.target.content.value = "";
     setRenderToggle(!renderToggle);
   }
@@ -179,7 +183,6 @@ export const BlogPage = ({ isAuth, userStatus }) => {
                     key={comment.id}
                     comment={{
                       ...comment,
-                      commentText: DOMPurify.sanitize(comment.commentText),
                     }}
                   />
                 ))}

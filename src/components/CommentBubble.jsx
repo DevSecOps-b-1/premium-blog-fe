@@ -1,6 +1,5 @@
 import React from "react";
 import { convertDate } from "../lib/postHelper";
-import InnerHTML from "dangerously-set-html-content";
 
 export const CommentBubble = ({ comment }) => {
   const date = convertDate(comment.created_at);
@@ -22,7 +21,7 @@ export const CommentBubble = ({ comment }) => {
           </span>
         </div>
         <div>
-          <InnerHTML html={`${comment.comment_text}`} />
+          <p>{comment.comment_text}</p>
         </div>
       </div>
     </li>
