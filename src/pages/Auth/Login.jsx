@@ -13,10 +13,20 @@ export const Login = () => {
       password: e.target.password.value,
     };
 
-    const { data } = await axios.post(loginRoute, loginData);
-    console.log(data);
+    try {
+      const { data } = await axios.post(loginRoute, loginData);
 
-    navigate("/");
+      // Save token in localStorage
+      localStorage.setItem("token", data.token);
+
+      axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
+
+      console.log("Login successful:", data);
+
+      navigate("/");
+    } catch (error) {
+      console.error("Login failed:", error.response?.data?.message || error.message);
+    }
   }
 
   return (
