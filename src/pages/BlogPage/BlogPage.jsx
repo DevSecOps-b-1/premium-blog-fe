@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { EditFormModal } from "./components/EditFormModal";
 import axios from "axios";
-import DOMPurify from "dompurify";
 import {
   addCommentRoute,
   getCommentsRoute,
