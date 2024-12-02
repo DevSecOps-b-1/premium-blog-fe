@@ -1,6 +1,6 @@
 FROM node:18-alpine AS builder 
 
-ENV REACT_APP_SERVER_HOST https://localhost:3001
+ENV REACT_APP_SERVER_HOST http://localhost:3001
 WORKDIR /app
 
 COPY package.json package-lock.json ./
