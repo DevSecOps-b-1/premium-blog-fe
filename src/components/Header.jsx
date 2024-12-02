@@ -1,13 +1,11 @@
-import { signInWithPopup, signOut } from "firebase/auth";
 import { useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
-import { auth, provider } from "../firebase/config";
+import { deleteCookie } from "../lib/cookieHelper";
+import axios from "axios";
+import { updateSubscribtionRoute } from "../routes/APIRoutes";
 
-export const Header = () => {
+export const Header = ({ isAuth, setIsAuth, userStatus }) => {
   const navigate = useNavigate();
-  const [isAuth, setIsAuth] = useState(
-    JSON.parse(localStorage.getItem("BlogmateAuth"))
-  ); // is user logged in?
   const [showNav, setShowNav] = useState(false); // to show navigation on mobile screen
 
   // navlink active styles
@@ -16,21 +14,25 @@ export const Header = () => {
   const classInactive =
     "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700";
 
-  async function handleLogin() {
-    // signInWithPopup(auth, provider).then(() => {
-    //     setIsAuth(true);
-    //     localStorage.setItem('BlogmateAuth', JSON.stringify(true));
-    //     navigate('/');
-    // }).catch((error) => {
-    //     console.error(error);
-    // })
+  function handleLogout() {
+    deleteCookie("token");
+    setIsAuth(false);
+    navigate("/");
+    // Force a reload of the page
+    window.location.reload();
   }
 
-  function handleLogout() {
-    // signOut(auth);
-    // setIsAuth(false);
-    // localStorage.setItem("BlogmateAuth", JSON.stringify(false));
-    // navigate("/");
+  async function handleSubscribe() {
+    await axios.post(updateSubscribtionRoute, {
+      isPremium: !userStatus.is_premium,
+    }, {
+      headers: {
+        Authorization: `Bearer ${isAuth}`,
+      },
+    });
+    navigate("/");
+    // Force a reload of the page
+    window.location.reload();
   }
 
   return (
@@ -102,7 +104,7 @@ export const Header = () => {
                   Home
                 </NavLink>
               </li>
-              {isAuth && (
+              {isAuth && userStatus.is_author && (
                 <li>
                   <NavLink
                     to="create-blog"
@@ -114,45 +116,59 @@ export const Header = () => {
                   </NavLink>
                 </li>
               )}
-              {isAuth && (
+              {isAuth && userStatus.is_author && (
                 <li>
-                  {/* <NavLink
-                    to={auth.currentUser && `author/${auth.currentUser.uid}`}
+                  <NavLink
+                    to={`/author`}
                     className={({ isActive }) =>
                       isActive ? classActive : classInactive
                     }
                   >
                     My Blog
-                  </NavLink> */}
+                  </NavLink>
                 </li>
               )}
               {isAuth ? (
-                <li>
-                  <button
-                    onClick={handleLogout}
-                    type="button"
-                    className="mt-5 sm:mt-0 flex items-center gap-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                  >
-                    <svg
-                      className="w-4 h-4 text-gray-300 dark:text-white"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="none"
-                      viewBox="0 0 24 24"
+                <>
+                  <li>
+                    <button
+                      onClick={handleLogout}
+                      type="button"
+                      className="mt-5 sm:mt-0 flex items-center gap-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2"
-                      />
-                    </svg>
-                    Logout
-                  </button>
-                </li>
+                      <svg
+                        className="w-4 h-4 text-gray-300 dark:text-white"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2"
+                        />
+                      </svg>
+                      Logout
+                    </button>
+                  </li>
+                  {!userStatus.is_author && (
+                    <li>
+                      <button
+                        onClick={handleSubscribe}
+                        className={`focus:outline-none text-white bg-yellow-600 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-600 font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:focus:ring-yellow-900`}
+                      >
+                        {userStatus.is_premium
+                          ? "Unsubscribe"
+                          : "Upgrade to premium"}
+                      </button>
+                    </li>
+                  )}
+                </>
               ) : (
                 <li className="self-center flex gap-2">
                   <NavLink

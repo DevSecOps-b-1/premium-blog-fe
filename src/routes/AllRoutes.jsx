@@ -7,25 +7,31 @@ import { ProtectedRoutes } from "./ProtectedRoutes";
 import { Login } from "../pages/Auth/Login";
 import { Register } from "../pages/Auth/Register";
 
-export const AllRoutes = () => {
+export const AllRoutes = ({ isAuth, setIsAuth, userStatus }) => {
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
       <Route
-        path="create-blog"
+        path="/"
+        element={<HomePage setIsAuth={setIsAuth} userStatus={userStatus} />}
+      />
+      <Route path="/login" element={<Login setIsAuth={setIsAuth} />} />
+      <Route path="/register" element={<Register setIsAuth={setIsAuth} />} />
+      <Route
+        path="/create-blog"
         element={
-          <ProtectedRoutes>
+          <ProtectedRoutes userStatus={userStatus}>
             <CreateBlogPage />
           </ProtectedRoutes>
         }
       />
-      <Route path="blog/:id" element={<BlogPage />} />
       <Route
-        path="author/:id"
+        path="blog/:id"
+        element={<BlogPage isAuth={isAuth} userStatus={userStatus} />}
+      />
+      <Route
+        path="/author"
         element={
-          <ProtectedRoutes>
+          <ProtectedRoutes userStatus={userStatus}>
             <AuthorsBlogPage />
           </ProtectedRoutes>
         }

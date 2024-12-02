@@ -2,21 +2,39 @@ import axios from "axios";
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { loginRoute } from "../../routes/APIRoutes";
+import { getCookie, deleteCookie } from "../../lib/cookieHelper";
+import Swal from "sweetalert2";
 
-export const Login = () => {
+export const Login = ({ setIsAuth }) => {
   const navigate = useNavigate();
 
   async function handleLogin(e) {
-    e.preventDefault();
-    const loginData = {
-      email: e.target.email.value,
-      password: e.target.password.value,
-    };
-
-    const { data } = await axios.post(loginRoute, loginData);
-    console.log(data);
-
-    navigate("/");
+    try {
+      e.preventDefault();
+      const loginData = {
+        email: e.target.email.value,
+        password: e.target.password.value,
+      };
+  
+      const { data } = await axios.post(loginRoute, loginData);
+      // Set a cookie in the browser
+      if (data.success) {
+        console.log('login success');
+        deleteCookie("token");
+        document.cookie = `token=${data.token}; path=/; max-age=86400;`;
+        setIsAuth(getCookie("token"));
+  
+        navigate("/");
+        // Force a reload of the page
+        window.location.reload();
+      } else throw new Error("Email or password is incorrect");
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Email or password is incorrect",
+      })
+    }
   }
 
   return (

@@ -1,8 +1,6 @@
 import { Navigate } from "react-router-dom";
-// import { auth } from "../firebase/config"
 
-export const ProtectedRoutes = ({ children }) => {
-  //   const isAuth = auth.currentUser;
-  const isAuth = false;
-  return isAuth ? children : <Navigate to="/" />;
+export const ProtectedRoutes = ({ children, userStatus }) => {
+  const isAuthor = userStatus.is_author;
+  return isAuthor ? children : <Navigate to="/" />;
 };
