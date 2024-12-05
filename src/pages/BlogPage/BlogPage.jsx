@@ -9,6 +9,7 @@ import {
 } from "../../routes/APIRoutes";
 import { CommentBubble } from "../../components/CommentBubble";
 import { getCookie } from "../../lib/cookieHelper";
+import Swal from "sweetalert2";
 
 export const BlogPage = ({ isAuth, userStatus }) => {
   const navigate = useNavigate();
@@ -21,19 +22,34 @@ export const BlogPage = ({ isAuth, userStatus }) => {
 
   useEffect(() => {
     async function getPost() {
-      const { data } = await axios.post(
-        getPostRoute,
-        {
-          postId: id,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${getCookie("token")}`,
+      try {
+        const result = await axios.post(
+          getPostRoute,
+          {
+            postId: id,
           },
+          {
+            headers: {
+              Authorization: `Bearer ${getCookie("token")}`,
+            },
+          }
+        );
+        setPost(result.data);
+        if (!result.data?.content) navigate("/");
+      } catch (error) {
+        if (error.response.status === 403) {
+          Swal.fire({
+            title: "Premium user only",
+            text: error.response.data?.message,
+            icon: "error",
+            confirmButtonText: "OK"
+          }).then((action) => {
+            if (action.isConfirmed) {
+              navigate("/");
+            }
+          })
         }
-      );
-      setPost(data);
-      if (!data?.content) navigate("/");
+      }
     }
 
     getPost();
