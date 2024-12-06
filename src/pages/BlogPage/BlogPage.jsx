@@ -37,17 +37,38 @@ export const BlogPage = ({ isAuth, userStatus }) => {
         setPost(result.data);
         if (!result.data?.content) navigate("/");
       } catch (error) {
-        if (error.response.status === 403) {
-          Swal.fire({
-            title: "Premium user only",
-            text: error.response.data?.message,
-            icon: "error",
-            confirmButtonText: "OK"
-          }).then((action) => {
-            if (action.isConfirmed) {
-              navigate("/");
-            }
-          })
+        switch (error.response.status) {
+          case 403:
+            Swal.fire({
+              title: "Premium user only",
+              text: error.response.data?.message,
+              icon: "error",
+              confirmButtonText: "OK",
+            }).then((action) => {
+              if (action.isConfirmed) {
+                navigate("/");
+              }
+            });
+            break;
+          case 404:
+            Swal.fire({
+              title: "Not found",
+              text: error.response.data?.message,
+              icon: "error",
+              confirmButtonText: "OK",
+            }).then((action) => {
+              if (action.isConfirmed) {
+                navigate("/");
+              }
+            });
+            break;
+          default:
+            Swal.fire({
+              title: "Error",
+              text: error.response.data?.message,
+              icon: "error",
+              confirmButtonText: "OK",
+            });
         }
       }
     }
