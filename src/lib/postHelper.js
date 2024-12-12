@@ -16,8 +16,9 @@ export function convertDate(isoString) {
 }
 
 export function createExcerpt(content) {
-  let contentPreview = content.split(" ");
-  if (contentPreview.length > 35)
-    contentPreview = contentPreview.slice(0, 35).join(" ");
-  return contentPreview;
+  // let contentPreview = content.split(" ");
+  // if (contentPreview.length > 35)
+  //   contentPreview = contentPreview.slice(0, 35).join(" ");
+  // return contentPreview;
+  return content;
 }
